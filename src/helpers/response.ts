@@ -1,22 +1,27 @@
+import HttpStatusCode from "src/utils/status-code";
 
 interface ResponseParams {
   status: number;
   message: string;
+  body?: any[] | any;
 }
 
 export class Response {
-  private status: number;
+  private status: HttpStatusCode;
   private message: string;
+  private body: any[] | any;
 
   constructor(response: ResponseParams) {
     this.status = response.status;
     this.message = response.message;
+    this.body = response.body;
   }
 
-  response(): Response {
+  static build(params: ResponseParams): Response {
     return new Response({
-      status: this.status,
-      message: this.message
+      status: params.status,
+      message: params.message,
+      body: params.body || {}
     });
   }
 }

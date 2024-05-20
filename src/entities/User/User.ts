@@ -1,10 +1,10 @@
 import { Entity } from "../../core/entity";
 
 export class User extends Entity {
-  private _name: string;
-  private _password: string;
-  private _email: string;
-  private _created_at: Date;
+  private name: string;
+  private password: string;
+  private email: string;
+  private created_at: Date;
 
   constructor() {
     super();
@@ -14,35 +14,35 @@ export class User extends Entity {
     return new User();
   }
 
-  public get name(): string {
-    return this._name;
+  public getName(): string {
+    return this.name;
   }
 
-  public get password(): string {
-    return this._password;
+  public getPassword(): string {
+    return this.password;
   }
 
-  public get email(): string {
-    return this._email;
+  public getEmail(): string {
+    return this.email;
   }
 
-  public get createdAt(): Date {
-    return this._created_at;
+  public getCreatedAt(): Date {
+    return this.created_at;
   }
 
-  public set name(value: string) {
-    this._name = value;
+  public setName(value: string) {
+    this.name = value;
   }
 
-  public set password(value: string) {
-    this._password = value;
+  public setPassword(value: string) {
+    this.password = value;
   }
 
-  public set email(value: string) {
-    this._email = value;
+  public setEmail(value: string) {
+    this.email = value;
   }
 
-  public set createdAt(value: Date) {
-    this._created_at = value;
+  public setCreatedAt(value: Date) {
+    this.created_at = value;
   }
 }
