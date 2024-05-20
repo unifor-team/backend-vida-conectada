@@ -1,3 +1,5 @@
-export interface UseCase<TModel> {
-  handle(...args: any[]): Promise<TModel>;
+import { Response } from "src/helpers/response";
+
+export interface UseCase {
+  handle(...args: any[]): Promise<Response>;
 }
