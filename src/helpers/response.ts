@@ -24,4 +24,12 @@ export class Response {
       body: params.body || {}
     });
   }
+
+  public getBody() {
+    return this.body;
+  }
+
+  public setBody(body: any) {
+    this.body = body;
+  }
 }

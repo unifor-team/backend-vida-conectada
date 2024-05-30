@@ -4,6 +4,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { Response } from "src/helpers/response";
 import HttpStatusCode from "src/utils/status-code";
 import { UserMapper } from "../mapper/dto-to-user";
+import { LoginDTO } from "../dto/login.dto";
 
 export class UserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaService, private readonly userMapper: UserMapper) {}
@@ -15,6 +16,23 @@ export class UserRepository implements IUserRepository {
 
       delete created.password;
       return Response.build({ status: HttpStatusCode.CREATED, message: "User created with success!", body: created });
+    } catch (error: any) {
+      return Response.build({ status: HttpStatusCode.BAD_REQUEST, message: error.message });
+    }
+  }
+
+  async findUserByEmailAndPassword(user: LoginDTO): Promise<Response> {
+    try {
+      const anUser = await this.prisma.user.findFirst({ where: {
+        email: user.email,
+        password: user.password
+      }});
+
+      if (!anUser) {
+        return Response.build({ status: HttpStatusCode.BAD_REQUEST, message: "User not found" });
+      }
+
+      return Response.build({ status: HttpStatusCode.OK, message: "User found!", body: anUser });
     } catch (error: any) {
       return Response.build({ status: HttpStatusCode.BAD_REQUEST, message: error.message });
     }
