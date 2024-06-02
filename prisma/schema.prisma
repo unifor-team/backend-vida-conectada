@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,8 +13,7 @@ model User {
   email      String   @unique
   name       String
   password   String 
-  followers  Followers[] @relation("followerRelation")
-  following  Followers[] @relation("followingRelation")
+  posts      Post[]   @relation("UserPosts")
 }
 
 model Notification {
@@ -28,19 +26,10 @@ model Notification {
 model Post {
   id           Int      @id @default(autoincrement())
   created_at   DateTime @default(now())
-  updated_at   DateTime 
-  deleted_at   DateTime 
+  updated_at   DateTime? 
+  deleted_at   DateTime?
   content      String 
   title        String
-}
-
-model Followers {
-  followerId  Int
-  followingId Int
-
-  followed_by User @relation("followerRelation", fields: [followerId], references: [id])
-  following   User @relation("followingRelation", fields: [followingId], references: [id])
-
-  @@id([followerId, followingId])
-  @@unique([followerId, followingId])
+  userId       Int
+  created_by   User     @relation("UserPosts", fields: [userId], references: [id])
 }

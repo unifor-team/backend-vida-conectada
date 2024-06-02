@@ -1,3 +1,4 @@
+import { ExceptionsHandler } from "@nestjs/core/exceptions/exceptions-handler";
 import HttpStatusCode from "src/utils/status-code";
 
 interface ResponseParams {

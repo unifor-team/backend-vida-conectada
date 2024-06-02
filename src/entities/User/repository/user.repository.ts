@@ -10,12 +10,21 @@ export class UserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaService, private readonly userMapper: UserMapper) {}
   
   async create(user: User): Promise<Response> {
+    const anUser =  this.userMapper.mapTo(user);
+    
     try {
-      const anUser =  this.userMapper.mapTo(user);
+      const anUserExist = await this.prisma.user.findFirst({ where: {
+        email: anUser.email
+      }});
+      
+      if (anUserExist) {
+        return Response.build({ status: HttpStatusCode.BAD_REQUEST, message: "Email já existe." })
+      }
+
       const created = await this.prisma.user.create({ data: anUser });
 
       delete created.password;
-      return Response.build({ status: HttpStatusCode.CREATED, message: "User created with success!", body: created });
+      return Response.build({ status: HttpStatusCode.CREATED, message: "Conta cadastrada com sucesso!", body: created });
     } catch (error: any) {
       return Response.build({ status: HttpStatusCode.BAD_REQUEST, message: error.message });
     }
@@ -29,10 +38,10 @@ export class UserRepository implements IUserRepository {
       }});
 
       if (!anUser) {
-        return Response.build({ status: HttpStatusCode.BAD_REQUEST, message: "User not found" });
+        return Response.build({ status: HttpStatusCode.BAD_REQUEST, message: "Credenciais incorretas" });
       }
 
-      return Response.build({ status: HttpStatusCode.OK, message: "User found!", body: anUser });
+      return Response.build({ status: HttpStatusCode.OK, message: "Logado com sucesso!", body: anUser });
     } catch (error: any) {
       return Response.build({ status: HttpStatusCode.BAD_REQUEST, message: error.message });
     }

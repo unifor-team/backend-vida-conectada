@@ -14,7 +14,12 @@ export class UserController {
 
   @Post("/create")
   create(@Body() params: CreateUserDTO): Promise<Response> {
-    return this.createUser.handle(params);
+    if (!params.email || !params.password || !params.name) throw new Error();
+    try {
+      return this.createUser.handle(params);
+    } catch (er) {
+      throw new Error(er)
+    }
   }
 
   @Post("/login")
