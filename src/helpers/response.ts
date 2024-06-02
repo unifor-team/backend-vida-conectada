@@ -1,3 +1,4 @@
+import { ExceptionsHandler } from "@nestjs/core/exceptions/exceptions-handler";
 import HttpStatusCode from "src/utils/status-code";
 
 interface ResponseParams {
@@ -23,5 +24,13 @@ export class Response {
       message: params.message,
       body: params.body || {}
     });
+  }
+
+  public getBody() {
+    return this.body;
+  }
+
+  public setBody(body: any) {
+    this.body = body;
   }
 }
