@@ -12,7 +12,7 @@ export class UserRepository implements IUserRepository {
       const posts = await this.prisma.post.findMany({
         where: { deleted_at: null },
         include: {
-          created_by: true  // Assuming that you have a relation defined between post and user in your Prisma schema
+          created_by: true 
         },
         orderBy: {
           created_at: 'desc'
@@ -29,8 +29,8 @@ export class UserRepository implements IUserRepository {
       const posts = await this.prisma.post.findMany({
         where: { deleted_at: null,  created_by: {
           name: {
-            contains: name, // Use contains filter for partial matches
-            mode: 'default' // Case-insensitive search
+            contains: name, 
+            mode: 'default'
           }
         }},
         include: {

@@ -11,7 +11,7 @@ import { ListPostsByUseUseCase } from "./use-case/list-post-by-user";
     secret: `${process.env.JWT_SECRETS}`,
   })],
   controllers: [PostController],
-  providers: [CreatePostUseCase, ListAllPostsUseCase, DeletePostUseCase, ListPostsByUseUseCase],
+  providers: [ListAllPostsUseCase, DeletePostUseCase, ListPostsByUseUseCase, CreatePostUseCase],
   exports: []
 })
 export class PostModule {}
