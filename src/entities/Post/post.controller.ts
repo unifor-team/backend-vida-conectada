@@ -29,13 +29,13 @@ export class PostController {
     return this.listAllPosts.handle();
   }
 
-  @Get("/find")
-  listPostByUser(@Query('name') name: string): Promise<Response> {
-    return this.listByUser.handle(name);
-  }
-
   @Delete("/:id")
   delete(@Param('id') id: string, @Headers('Authorization') authorization: string) {
     return this.deletePost.handle(id, authorization);
+  }
+  
+  @Get("/find")
+  listPostByUser(@Query('name') name: string): Promise<Response> {
+    return this.listByUser.handle(name);
   }
 }
