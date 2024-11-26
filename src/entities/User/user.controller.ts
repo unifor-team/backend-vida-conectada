@@ -12,17 +12,8 @@ export class UserController {
     private readonly userLogin: LoginUseCase
   ) {}
 
-  @Post("/create")
-  create(@Body() params: CreateUserDTO): Promise<Response> {
-    if (!params.email || !params.password || !params.name) throw new Error();
-    try {
-      return this.createUser.handle(params);
-    } catch (er) {
-      throw new Error(er)
-    }
-  }
-
-  @Post("/login")
+  
+  @Post("/login") //login de usuário
   login(@Body() params: LoginDTO): Promise<Response> {
    return this.userLogin.handle(params);
   }
@@ -32,4 +23,15 @@ export class UserController {
   getProfile(@Request() req) {
     return req.user;
   }
+
+  @Post("/create") //criação de usuário
+  create(@Body() params: CreateUserDTO): Promise<Response> {
+    if (!params.email || !params.password || !params.name) throw new Error();
+    try {
+      return this.createUser.handle(params);
+    } catch (er) {
+      throw new Error(er)
+    }
+  }
+
 }

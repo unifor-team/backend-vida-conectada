@@ -24,6 +24,10 @@ export class PostController {
     }
   }
 
+  @Delete("/:id")
+  delete(@Param('id') id: string, @Headers('Authorization') authorization: string) {
+    return this.deletePost.handle(id, authorization);
+  }
   @Get("/")
   listAll(): Promise<Response> {
     return this.listAllPosts.handle();
@@ -34,8 +38,5 @@ export class PostController {
     return this.listByUser.handle(name);
   }
 
-  @Delete("/:id")
-  delete(@Param('id') id: string, @Headers('Authorization') authorization: string) {
-    return this.deletePost.handle(id, authorization);
-  }
+
 }
